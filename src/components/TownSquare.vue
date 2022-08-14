@@ -247,6 +247,22 @@ export default {
         this.cancel();
       }
     },
+    PnominatePlayer(from, to) {
+      console.log(this.session);
+      console.log(from);
+      console.log(to);
+      //if (this.session.isSpectator || this.session.lockedVote) return;
+      if (to === undefined) {
+        this.cancel();
+        if (from !== this.nominate) {
+          this.nominate = from;
+        }
+      } else {
+        const nomination = [this.nominate, this.players.indexOf(to)];
+        this.$store.commit("session/nomination", { nomination });
+        this.cancel();
+      }
+    },
     cancel() {
       this.move = -1;
       this.swap = -1;

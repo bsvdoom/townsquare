@@ -77,9 +77,15 @@
         <font-awesome-icon
           icon="hand-point-right"
           class="nominate"
-          @click="nominatePlayer(player)"
+          @click="PnominatePlayer(player)"
           title="Nominate this player"
         />
+<!--        <font-awesome-icon
+          icon="hand-point-right"
+          class="Pnominate"
+          @click="PnominatePlayer(player)"
+          title="Nominate this playerx"
+        />-->
       </div>
 
       <!-- Claimed seat icon -->
@@ -126,6 +132,12 @@
           >
             <font-awesome-icon icon="venus-mars" />Change Pronouns
           </li>
+          <template v-if="!session.nomination && player.id === session.playerId">
+            <li @click="PnominatePlayer()">
+              <font-awesome-icon icon="hand-point-right" />
+              Nomination
+            </li>
+          </template>
           <template v-if="!session.isSpectator">
             <li @click="changeName">
               <font-awesome-icon icon="user-edit" />Rename
@@ -156,6 +168,7 @@
               </li>
             </template>
           </template>
+
           <li
             @click="claimSeat"
             v-if="session.isSpectator"
@@ -326,6 +339,11 @@ export default {
     nominatePlayer(player) {
       this.isMenuOpen = false;
       this.$emit("trigger", ["nominatePlayer", player]);
+    },
+    PnominatePlayer(player) {
+      console.log("ASD");
+      this.isMenuOpen = false;
+      this.$emit("trigger", ["PnominatePlayer", player]);
     },
     cancel() {
       this.$emit("trigger", ["cancel"]);
